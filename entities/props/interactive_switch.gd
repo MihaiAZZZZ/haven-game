@@ -1,9 +1,6 @@
 extends Area2D
 class_name InteractiveSwitch
 
-## InteractiveSwitch: Physical mechanism (lever, gear crank, pressure plate).
-## Requires physical (manifested) ghost presence. Clean, emoji-free prompts.
-
 signal toggled(is_active: bool)
 
 enum SwitchType { LEVER, PRESSURE_PLATE, GEAR_CRANK }
@@ -52,11 +49,11 @@ func trigger_switch() -> void:
 	is_active = not is_active
 	AudioSynth.play_switch()
 	toggled.emit(is_active)
-	
+
 	var tw = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "scale", Vector2(1.15, 0.85), 0.1)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.25)
-	
+
 	_update_prompt()
 
 func _flash_prompt_warning() -> void:
@@ -79,24 +76,21 @@ func _update_prompt() -> void:
 
 func _draw() -> void:
 	var ink = Color(0.12, 0.09, 0.16, 1.0)
-	var base_col = Color(0.48, 0.38, 0.3) # Warm wood/metal
+	var base_col = Color(0.48, 0.38, 0.3)
 	var active_col = Color(0.88, 0.72, 0.28) if is_active else Color(0.65, 0.35, 0.28)
-	var p = 2.0 # Pixel scale
-	
+	var p = 2.0
+
 	if switch_type == SwitchType.LEVER:
-		# Pixel base box
 		draw_rect(Rect2(-16, -6, 32, 12), ink)
 		draw_rect(Rect2(-14, -4, 28, 8), base_col)
 		var angle = -0.55 if not is_active else 0.55
 		var arm_end = Vector2(sin(angle) * 22, -cos(angle) * 22)
 		draw_line(Vector2(0, 0), arm_end, ink, 4.0)
 		draw_line(Vector2(0, 0), arm_end, Color(0.85, 0.82, 0.78), 2.0)
-		# Pixel square knob
 		draw_rect(Rect2(arm_end.x - 6, arm_end.y - 6, 12, 12), ink)
 		draw_rect(Rect2(arm_end.x - 4, arm_end.y - 4, 8, 8), active_col)
 	elif switch_type == SwitchType.GEAR_CRANK:
 		var r = 16.0
-		# Stepped pixel gear
 		draw_rect(Rect2(-r - 4, -r - 4, (r + 4) * 2, (r + 4) * 2), ink)
 		draw_rect(Rect2(-r, -r, r * 2, r * 2), Color(0.72, 0.54, 0.24))
 		draw_rect(Rect2(-8, -8, 16, 16), ink)

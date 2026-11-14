@@ -1,9 +1,6 @@
 extends Area2D
 class_name GhostMother
 
-## Secondary Ghost NPC: Mama
-## Floats peacefully, tells her story in a speech bubble, and gives the quest for the chest key.
-
 signal dialogue_started()
 signal dialogue_finished()
 
@@ -26,10 +23,10 @@ var _time: float = 0.0
 
 func _ready() -> void:
 	collision_layer = 0
-	collision_mask = 2 # Player
+	collision_mask = 2
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	
+
 	if prompt_container:
 		prompt_container.visible = false
 	if dialogue_box:
@@ -42,7 +39,7 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _player_in_range:
 		return
-		
+
 	if event.is_action_pressed("interact") and not event.is_echo():
 		if _is_dialogue_open:
 			_advance_dialogue()
@@ -72,18 +69,18 @@ func _start_dialogue() -> void:
 	_current_page = 0
 	if prompt_container:
 		prompt_container.visible = false
-		
+
 	AudioSynth.play_chime(1.1)
 	dialogue_started.emit()
 	_update_dialogue_display()
-	
+
 	if dialogue_box:
 		dialogue_box.visible = true
 
 func _advance_dialogue() -> void:
 	_current_page += 1
 	AudioSynth.play_click()
-	
+
 	if _current_page >= dialogue_pages.size():
 		_close_dialogue()
 		dialogue_finished.emit()
@@ -100,7 +97,7 @@ func _close_dialogue() -> void:
 func _update_dialogue_display() -> void:
 	if not dialogue_text or not continue_prompt:
 		return
-		
+
 	dialogue_text.text = dialogue_pages[_current_page]
 	if _current_page >= dialogue_pages.size() - 1:
 		continue_prompt.text = "[E] Incepe Cautarea"
@@ -109,61 +106,48 @@ func _update_dialogue_display() -> void:
 
 func _draw() -> void:
 	var ink = Color(0.12, 0.09, 0.16, 1.0)
-	var p = 2.5 # Pixel size
-	
-	# Gentle floating bob
+	var p = 2.5
+
 	var bob_y = sin(_time * 2.8) * 4.0
 	var ox = -10.0 * p
 	var oy = -28.0 * p + bob_y
-	
-	var col_fill = Color(0.96, 0.92, 0.98, 0.95) # Soft lavender-white
+
+	var col_fill = Color(0.96, 0.92, 0.98, 0.95)
 	var col_shad = Color(0.82, 0.76, 0.90, 0.95)
-	var blush_col = Color(0.96, 0.65, 0.72, 1.0) # Rosy blush
-	
-	# Ethereal glow aura
+	var blush_col = Color(0.96, 0.65, 0.72, 1.0)
+
 	var aura_size = 28.0 * p + sin(_time * 3.5) * 4.0
 	draw_rect(Rect2(-aura_size * 0.5, oy + 8.0 * p, aura_size, aura_size), Color(0.85, 0.75, 1.0, 0.18))
-	
-	# Mama ghost grid (20x26 pixels)
-	# 1. Head & Veil
+
 	draw_rect(Rect2(ox + 4 * p, oy, 12 * p, 4 * p), ink)
 	draw_rect(Rect2(ox + 2 * p, oy + 3 * p, 16 * p, 12 * p), ink)
 	draw_rect(Rect2(ox + 5 * p, oy + 1 * p, 10 * p, 3 * p), col_fill)
 	draw_rect(Rect2(ox + 3 * p, oy + 4 * p, 14 * p, 10 * p), col_fill)
-	
-	# Elegant shawl shading
+
 	draw_rect(Rect2(ox + 2 * p, oy + 12 * p, 4 * p, 6 * p), col_shad)
 	draw_rect(Rect2(ox + 14 * p, oy + 12 * p, 4 * p, 6 * p), col_shad)
-	
-	# 2. Flowing Gown / Veil
+
 	draw_rect(Rect2(ox + 3 * p, oy + 14 * p, 14 * p, 9 * p), ink)
 	draw_rect(Rect2(ox + 4 * p, oy + 14 * p, 12 * p, 8 * p), col_fill)
 	draw_rect(Rect2(ox + 4 * p, oy + 18 * p, 12 * p, 4 * p), col_shad)
-	
-	# Rippling hem
+
 	var hem_offset = int(sin(_time * 4.0) * 1.5) * p
 	draw_rect(Rect2(ox + 3 * p, oy + 22 * p + hem_offset, 14 * p, 3 * p), ink)
 	draw_rect(Rect2(ox + 4 * p, oy + 22 * p + hem_offset, 12 * p, 2 * p), col_fill)
-	
-	# 3. Gentle kind eyes with eyelashes
+
 	var eye_y = oy + 7 * p
-	# Left eye
 	draw_rect(Rect2(ox + 6 * p, eye_y, 2 * p, 3 * p), Color.WHITE)
 	draw_rect(Rect2(ox + 6 * p, eye_y + 1 * p, 2 * p, 2 * p), ink)
-	draw_rect(Rect2(ox + 5 * p, eye_y - 1 * p, 3 * p, 1 * p), ink) # Lash
-	# Right eye
+	draw_rect(Rect2(ox + 5 * p, eye_y - 1 * p, 3 * p, 1 * p), ink)
 	draw_rect(Rect2(ox + 12 * p, eye_y, 2 * p, 3 * p), Color.WHITE)
 	draw_rect(Rect2(ox + 12 * p, eye_y + 1 * p, 2 * p, 2 * p), ink)
-	draw_rect(Rect2(ox + 12 * p, eye_y - 1 * p, 3 * p, 1 * p), ink) # Lash
-	
-	# 4. Rosy blush cheeks
+	draw_rect(Rect2(ox + 12 * p, eye_y - 1 * p, 3 * p, 1 * p), ink)
+
 	draw_rect(Rect2(ox + 4 * p, oy + 10 * p, 2 * p, 1 * p), blush_col)
 	draw_rect(Rect2(ox + 14 * p, oy + 10 * p, 2 * p, 1 * p), blush_col)
-	
-	# 5. Sweet smile
+
 	draw_rect(Rect2(ox + 9 * p, oy + 11 * p, 2 * p, 1 * p), ink)
-	
-	# 6. Floating spectral sparkle motes
+
 	for i in range(3):
 		var t = fmod(_time * 2.0 + i * 0.9, 1.0)
 		var sx = ox + (sin(i * 3.0 + _time * 2.0) * 14.0 + 10.0) * p

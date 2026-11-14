@@ -1,9 +1,6 @@
 extends CanvasLayer
 class_name PauseMenu
 
-## PauseMenu: Clean, cozy pause menu triggered on ESC or P
-## Buttons: Continua, Restart / Reincearca Nivelul, Inapoi la Arbore (always available).
-
 signal resumed()
 
 @onready var modal_panel: PanelContainer = %ModalPanel
@@ -15,9 +12,9 @@ var is_paused: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	layer = 150 # On top of everything
+	layer = 150
 	visible = false
-	
+
 	if resume_button:
 		resume_button.pressed.connect(resume_game)
 	if restart_button:
@@ -42,9 +39,9 @@ func pause_game() -> void:
 	get_tree().paused = true
 	visible = true
 	AudioSynth.play_click()
-	
+
 	_update_menu_context()
-	
+
 	if modal_panel:
 		modal_panel.scale = Vector2(0.9, 0.9)
 		modal_panel.modulate.a = 0.0
@@ -55,12 +52,11 @@ func pause_game() -> void:
 func _update_menu_context() -> void:
 	var current_path = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	var is_at_tree_hub = (current_path == GameManager.TREE_HUB_SCENE)
-	
-	# Butonul "Inapoi la Arbore" este mereu vizibil
+
 	if tree_hub_button:
 		tree_hub_button.visible = true
 		tree_hub_button.text = "Inapoi la Arbore"
-		
+
 	if restart_button:
 		if is_at_tree_hub:
 			restart_button.text = "Restart"

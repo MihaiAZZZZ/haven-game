@@ -1,8 +1,6 @@
 extends CanvasLayer
 class_name HUD
 
-## Minimalist HUD: Only a small transparent pause button in the corner.
-
 @onready var pause_button: Button = %PauseButton
 
 var pause_menu: CanvasLayer = null
@@ -22,7 +20,6 @@ func _on_pause_pressed() -> void:
 		if pm:
 			pm.toggle_pause()
 
-# Safe no-ops for existing level scripts
 func setup_level(_title: String, _objective: String) -> void:
 	pass
 

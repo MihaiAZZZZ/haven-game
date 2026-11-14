@@ -1,8 +1,6 @@
 extends Node2D
 class_name MemoryBase
 
-## MemoryBase: Base controller for ancestral puzzle memories.
-
 @export var ancestor_id: String = ""
 @export var memory_title: String = "Amintire Strămoșească"
 @export var initial_objective: String = "Rezolvă enigma"
@@ -18,14 +16,13 @@ func _ready() -> void:
 		if player:
 			hud.set_phased_state(player.is_phased)
 			player.phased_changed.connect(hud.set_phased_state)
-			
+
 	if relic:
 		relic.collected.connect(_on_relic_collected)
-		
+
 	_setup_memory()
 
 func _setup_memory() -> void:
-	# Subclasses override this
 	pass
 
 func _on_relic_collected() -> void:

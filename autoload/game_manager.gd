@@ -1,8 +1,5 @@
 extends Node
 
-## GameManager: Central state manager for Haven: Spectral Roots
-## Coordinates ancestor data, level progression, and scene transitions.
-
 signal ancestor_unlocked(ancestor_id: String)
 signal memory_completed(ancestor_id: String)
 signal tree_updated()
@@ -12,7 +9,6 @@ var ancestors: Dictionary = {}
 var current_ancestor_id: String = ""
 var last_completed_ancestor_id: String = ""
 
-# Scenes
 const TREE_HUB_SCENE: String = "res://levels/tree_hub/family_tree_view.tscn"
 const ASCENSION_SCENE: String = "res://levels/haven_ascension/haven_ascension.tscn"
 
@@ -41,7 +37,6 @@ func _register_action(action_name: String, keycodes: Array) -> void:
 		InputMap.action_add_event(action_name, ev)
 
 func _init_ancestors() -> void:
-	# Level 0. Corin (The Ghost Protagonist - Starting Memory)
 	var corin = AncestorData.new()
 	corin.id = "corin"
 	corin.name = "Corin"
@@ -49,7 +44,7 @@ func _init_ancestors() -> void:
 	corin.relation = "Tu"
 	corin.generation = 0
 	corin.tree_position = Vector2(640, 160)
-	corin.unlocked = true # First playable level!
+	corin.unlocked = true
 	corin.solved = false
 	corin.level_scene_path = "res://levels/memories/memory_1_clockmaker.tscn"
 	corin.memory_title = "Amintirea 0: Camera cu Ceasuri"
@@ -58,7 +53,6 @@ func _init_ancestors() -> void:
 	corin.color_tint = Color(0.4, 0.9, 1.0)
 	ancestors["corin"] = corin
 
-	# Level 1. Mama (Mother - The Loving Spirit)
 	var mama = AncestorData.new()
 	mama.id = "mama"
 	mama.name = "Maria"
@@ -71,12 +65,11 @@ func _init_ancestors() -> void:
 	mama.memory_title = "Amintirea 1: Cufărul Mamei"
 	mama.memory_description = "Înfruntă curenții de aer din mansardă și recuperează Amuleta de Aur a Mamei (Piesa 2 din colier)."
 	mama.memory_quote = "\"Ai adus a doua piesă a colierului, Corin. Mai lipsește doar piesa ascunsă de Bunica.\""
-	mama.unlocked = false # Unlocks after Corin finds piece 1!
+	mama.unlocked = false
 	mama.solved = false
 	mama.color_tint = Color(0.95, 0.75, 0.3)
 	ancestors["mama"] = mama
 
-	# Level 2. Bunica (Grandmother - The Watchful Guardian)
 	var bunica = AncestorData.new()
 	bunica.id = "bunica"
 	bunica.name = "Elena"
@@ -89,12 +82,11 @@ func _init_ancestors() -> void:
 	bunica.memory_title = "Amintirea 2: Depozitul din WW2"
 	bunica.memory_description = "Infiltrează-te în depozitul militar din WW2 în 35 de secunde, evită proiectoarele și recuperează Medalionul cu Rubin."
 	bunica.memory_quote = "\"Ai adus a treia piesă! Posesorul originar al colierului te așteaptă la Sanctuarul Străvechi.\""
-	bunica.unlocked = false # Unlocks after Mama is solved!
+	bunica.unlocked = false
 	bunica.solved = false
 	bunica.color_tint = Color(0.85, 0.45, 0.75)
 	ancestors["bunica"] = bunica
 
-	# Level 3. Originea (The Origin - Străbunica Victoria - Original Owner of the Necklace)
 	var originea = AncestorData.new()
 	originea.id = "originea"
 	originea.name = "Victoria"
@@ -107,7 +99,7 @@ func _init_ancestors() -> void:
 	originea.memory_title = "Amintirea 3: Originea Străveche"
 	originea.memory_description = "Află taina colierului vrăjit din dragoste, așază piesele pe Altarul Strămoșesc și rupe blestemul neamului."
 	originea.memory_quote = "\"Blestemul a fost rupt din iubire... Acum putem merge împreună în Rai.\""
-	originea.unlocked = false # Unlocks after Bunica is solved!
+	originea.unlocked = false
 	originea.solved = false
 	originea.color_tint = Color(0.98, 0.85, 0.35)
 	ancestors["originea"] = originea
@@ -124,12 +116,11 @@ func are_all_memories_solved() -> bool:
 func mark_memory_solved(ancestor_id: String) -> void:
 	if not ancestors.has(ancestor_id):
 		return
-	
+
 	var a: AncestorData = ancestors[ancestor_id]
 	a.solved = true
 	last_completed_ancestor_id = ancestor_id
-	
-	# Progression: Corin (Lvl 0) -> Mama (Lvl 1) -> Bunica (Lvl 2) -> Originea (Lvl 3) -> Haven Ascension
+
 	if ancestor_id == "corin":
 		if ancestors.has("mama"):
 			ancestors["mama"].unlocked = true
@@ -144,7 +135,7 @@ func mark_memory_solved(ancestor_id: String) -> void:
 			ancestor_unlocked.emit("originea")
 	elif ancestor_id == "originea":
 		ascension_ready.emit()
-		
+
 	memory_completed.emit(ancestor_id)
 	tree_updated.emit()
 

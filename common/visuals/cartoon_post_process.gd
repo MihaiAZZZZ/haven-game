@@ -1,9 +1,6 @@
 extends CanvasLayer
 class_name CartoonPostProcess
 
-## CartoonPostProcess: Cozy storybook color and warmth grade
-## Runs under the UI (layer 5) so UI text and HUD elements remain crisp and clean.
-
 @onready var filter_rect: ColorRect = %FilterRect
 
 @export_range(0.0, 1.0, 0.05) var warmth: float = 0.25:
@@ -22,7 +19,7 @@ class_name CartoonPostProcess
 		_update_shader()
 
 func _ready() -> void:
-	layer = 5 # Ensure it stays BELOW the UI (HUD is layer 50)
+	layer = 5
 	_update_shader()
 
 func _update_shader() -> void:

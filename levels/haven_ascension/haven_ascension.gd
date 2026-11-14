@@ -1,8 +1,5 @@
 extends Control
 
-## HavenAscension: The climatic ascension ending scene in HAVEN (Heaven).
-## Clean, cozy, emoji-free narrative.
-
 @onready var message_label: Label = %MessageLabel
 @onready var quote_label: Label = %QuoteLabel
 @onready var ascend_prompt: Label = %AscendPrompt
@@ -44,19 +41,19 @@ func _ready() -> void:
 		restart_button.pressed.connect(_on_restart_pressed)
 	if tree_hub_button:
 		tree_hub_button.pressed.connect(_on_tree_hub_pressed)
-		
+
 	_display_current_dialogue()
 
 func _process(delta: float) -> void:
 	_time += delta
-	
+
 	if _ascension_started:
 		_ghost_pos.y -= delta * 140.0
 		if _ghost_pos.y < 120.0 and victory_card and not victory_card.visible:
 			_show_final_victory()
 	else:
 		_ghost_pos.y = 500.0 + sin(_time * 2.8) * 10.0
-		
+
 	queue_redraw()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -120,8 +117,7 @@ func _on_tree_hub_pressed() -> void:
 
 func _draw() -> void:
 	var ink = Color(0.14, 0.1, 0.16, 1.0)
-	
-	# Warm celestial light rays
+
 	var center = Vector2(640, -40)
 	var ray_count = 14
 	for i in range(ray_count):
@@ -134,31 +130,27 @@ func _draw() -> void:
 		])
 		var alpha = (sin(_time * 1.8 + i) * 0.5 + 0.5) * 0.07 + 0.03
 		draw_colored_polygon(ray_pts, Color(0.98, 0.94, 0.75, alpha))
-		
-	# Warm Portal Gate at the top
+
 	var portal_center = Vector2(640, 90)
 	var p_pulse = 1.0 + 0.08 * sin(_time * 3.5)
 	draw_circle(portal_center, 90.0 * p_pulse, Color(0.98, 0.88, 0.5, 0.3))
 	draw_circle(portal_center, 65.0 * p_pulse, Color(0.98, 0.94, 0.78, 0.5))
 	draw_circle(portal_center, 40.0, Color.WHITE)
-	
-	# Cloud steps
+
 	for step in range(6):
 		var sy = 560.0 - step * 70.0
 		var sw = 280.0 - step * 25.0
 		draw_rect(Rect2(640 - sw * 0.5, sy, sw, 14), Color(0.95, 0.92, 0.85, 0.45))
-		
-	# Ancestor wisps
+
 	_draw_ancestor_wisp(Vector2(380, _ghost_pos.y + 35 + sin(_time * 2.5) * 8.0), Color(0.45, 0.85, 0.55), "Maria", ink)
 	_draw_ancestor_wisp(Vector2(900, _ghost_pos.y + 35 + sin(_time * 2.7 + 1.0) * 8.0), Color(0.95, 0.45, 0.65), "Elena", ink)
 	_draw_ancestor_wisp(Vector2(640, _ghost_pos.y - 75 + sin(_time * 2.3 + 2.0) * 8.0), Color(0.98, 0.85, 0.35), "Victoria", ink)
-	
+
 	_draw_ascended_corin(_ghost_pos, ink)
 
 func _draw_ancestor_wisp(pos: Vector2, col: Color, name_str: String, ink: Color) -> void:
 	var pulse = 1.0 + 0.1 * sin(_time * 4.5 + pos.x)
 	var r = 14.0 * pulse
-	# Stepped diamond pixel wisp
 	var halo_pts = PackedVector2Array([
 		Vector2(pos.x, pos.y - r - 6),
 		Vector2(pos.x + r + 6, pos.y),
@@ -172,24 +164,18 @@ func _draw_ancestor_wisp(pos: Vector2, col: Color, name_str: String, ink: Color)
 	draw_string(ThemeDB.fallback_font, pos + Vector2(-22, 28), name_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 12, ink)
 
 func _draw_ascended_corin(pos: Vector2, ink: Color) -> void:
-	# Pixel halo
 	var halo_y = pos.y - 48.0
 	draw_rect(Rect2(pos.x - 14, halo_y - 4, 28, 8), ink)
 	draw_rect(Rect2(pos.x - 12, halo_y - 2, 24, 4), Color(0.98, 0.85, 0.35))
 	draw_rect(Rect2(pos.x - 8, halo_y - 1, 16, 2), Color.WHITE)
-	
-	# Pixel Wings
+
 	var wing_flap = int(sin(_time * 7.0) * 3.0) * 2
-	# Left pixel wing
 	draw_rect(Rect2(pos.x - 38, pos.y - 30 + wing_flap, 26, 16), ink)
 	draw_rect(Rect2(pos.x - 36, pos.y - 28 + wing_flap, 22, 12), Color(0.98, 0.95, 0.85))
-	# Right pixel wing
 	draw_rect(Rect2(pos.x + 12, pos.y - 30 + wing_flap, 26, 16), ink)
 	draw_rect(Rect2(pos.x + 14, pos.y - 28 + wing_flap, 22, 12), Color(0.98, 0.95, 0.85))
-	
-	# Pixel Body
+
 	draw_rect(Rect2(pos.x - 18, pos.y - 34, 36, 36), ink)
 	draw_rect(Rect2(pos.x - 15, pos.y - 31, 30, 30), Color(0.98, 0.96, 0.92))
-	# Happy curved closed pixel eyes ^^
 	draw_rect(Rect2(pos.x - 9, pos.y - 20, 5, 3), ink)
 	draw_rect(Rect2(pos.x + 4, pos.y - 20, 5, 3), ink)

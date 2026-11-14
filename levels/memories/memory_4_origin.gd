@@ -1,11 +1,5 @@
 extends MemoryBase
 
-## Level 3: Sanctuarul Originii (Străbunica Victoria)
-## Setting: Mystical ancient Gothic sanctuary with stained glass rose window and ancestral altar.
-## Lore Twist: The curse was created out of deep love to protect the family women, but backfired.
-## Climax: Speak with the Original Owner, complete the final assembly puzzle on the Altar,
-## and experience the emotional cutscene where the curse breaks and all souls ascend to Haven.
-
 @onready var origin_matriarch: Area2D = %GhostOrigin
 @onready var ancestral_altar: Area2D = %AncestralAltar
 @onready var cutscene_layer: CanvasLayer = %CutsceneLayer
@@ -46,18 +40,18 @@ func _setup_memory() -> void:
 	ancestor_id = "originea"
 	memory_title = "Amintirea 3: Originea (Străbunica Victoria)"
 	initial_objective = "Vorbeste cu Strabunica Victoria pentru a afla taina colierului"
-	
+
 	if relic:
 		relic.visible = false
 		relic.set_deferred("monitoring", false)
-		
+
 	if origin_matriarch:
 		origin_matriarch.dialogue_finished.connect(_on_matriarch_dialogue_finished)
-		
+
 	if ancestral_altar:
 		ancestral_altar.piece_placed.connect(_on_altar_piece_placed)
 		ancestral_altar.puzzle_completed.connect(_on_altar_puzzle_completed)
-		
+
 	if cutscene_layer:
 		cutscene_layer.visible = false
 	if cutscene_spirits:
@@ -84,37 +78,35 @@ func _on_altar_piece_placed(index: int, piece_name: String) -> void:
 func _on_altar_puzzle_completed() -> void:
 	if hud:
 		hud.update_objective("Colierul este asamblat! Blestemul iubirii a fost rupt!")
-		
-	# Freeze player during the final cutscene
+
 	if player:
 		player.velocity = Vector2.ZERO
 		player.set_physics_process(false)
-		
-	# Trigger Grand Finale Cutscene
+
 	_start_final_cutscene()
 
 func _start_final_cutscene() -> void:
 	_cutscene_active = true
 	_cutscene_step = 0
-	
+
 	if cutscene_layer:
-		cutscene_layer.visible = true
+			cutscene_layer.visible = true
 	if cutscene_panel:
 		cutscene_panel.modulate.a = 0.0
 		var tw = create_tween().set_parallel(true)
 		tw.tween_property(cutscene_panel, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-		
+
 	if cutscene_spirits:
 		var sp_tw = create_tween()
 		sp_tw.tween_property(cutscene_spirits, "modulate:a", 1.0, 1.0)
-		
+
 	AudioSynth.play_fanfare()
 	_update_cutscene_line()
 
 func _advance_cutscene() -> void:
 	_cutscene_step += 1
 	AudioSynth.play_click()
-	
+
 	if _cutscene_step >= cutscene_lines.size():
 		_end_final_cutscene()
 	else:
@@ -123,18 +115,18 @@ func _advance_cutscene() -> void:
 func _update_cutscene_line() -> void:
 	if not cutscene_speaker or not cutscene_text:
 		return
-		
+
 	var line = cutscene_lines[_cutscene_step]
 	cutscene_speaker.text = line["speaker"]
 	cutscene_speaker.add_theme_color_override("font_color", line["color"])
 	cutscene_text.text = line["text"]
-	
+
 	if cutscene_prompt:
 		if _cutscene_step == cutscene_lines.size() - 1:
 			cutscene_prompt.text = "[E / Space] Încheie și Eliberează Sufletele"
 		else:
 			cutscene_prompt.text = "[E / Space] Continuă (" + str(_cutscene_step + 1) + "/" + str(cutscene_lines.size()) + ")"
-			
+
 	AudioSynth.play_chime(1.1 + _cutscene_step * 0.1)
 
 func _end_final_cutscene() -> void:
@@ -142,9 +134,8 @@ func _end_final_cutscene() -> void:
 	if cutscene_layer:
 		cutscene_layer.visible = false
 	AudioSynth.play_ascension()
-	
-	# Mark Originea memory as completely solved in GameManager
+
 	GameManager.mark_memory_solved("originea")
-	
+
 	if complete_dialog:
 		complete_dialog.show_completion("originea")
