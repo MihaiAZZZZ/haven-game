@@ -1,0 +1,356 @@
+[gd_scene format=3 uid="uid://dm1k9x4r2v8ba"]
+
+[ext_resource type="Script" path="res://levels/memories/memory_1_clockmaker.gd" id="1_script"]
+[ext_resource type="Script" path="res://common/visuals/clock_background.gd" id="2_bg"]
+[ext_resource type="Script" path="res://common/visuals/cartoon_platform.gd" id="3_plat"]
+[ext_resource type="PackedScene" path="res://entities/player/ghost_player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://entities/props/spectral_barrier.tscn" id="5_barrier"]
+[ext_resource type="PackedScene" path="res://entities/props/interactive_drawer.tscn" id="6_drawer"]
+[ext_resource type="PackedScene" path="res://entities/props/memory_pickup.tscn" id="7_relic"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="8_hud"]
+[ext_resource type="PackedScene" path="res://ui/memory_complete_dialog.tscn" id="9_dialog"]
+[ext_resource type="PackedScene" path="res://common/visuals/cartoon_post_process.tscn" id="10_post"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="11_pause"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1400, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step"]
+size = Vector2(80, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelf_small"]
+size = Vector2(160, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelf_wide"]
+size = Vector2(240, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clock_ledge"]
+size = Vector2(140, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_divider"]
+size = Vector2(20, 200)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial"]
+content_margin_left = 16.0
+content_margin_top = 7.0
+content_margin_right = 16.0
+content_margin_bottom = 7.0
+bg_color = Color(0.08, 0.07, 0.12, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.35, 0.32, 0.42, 0.7)
+
+[node name="Memory1Clockmaker" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="ClockBackground" type="Node2D" parent="."]
+script = ExtResource("2_bg")
+
+[node name="CartoonPostProcess" parent="." instance=ExtResource("10_post")]
+
+[node name="LevelGeometry" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 650)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="WallLeft" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(-20, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(1300, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Ceiling" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 10)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="OneWayPlatforms" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="StepStoolLeft" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(180, 580)
+shape = SubResource("RectangleShape2D_step")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="DresserTopLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(280, 555)
+shape = SubResource("RectangleShape2D_step")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="BookshelfLow" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(160, 465)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="BookshelfHigh" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(280, 385)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="ClockShoulderLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(460, 395)
+shape = SubResource("RectangleShape2D_clock_ledge")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="ClockTopLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(560, 315)
+shape = SubResource("RectangleShape2D_clock_ledge")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="MidGearLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(740, 305)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="AtticRafterMid" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(910, 285)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="AtticRafterHigh" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(1110, 235)
+shape = SubResource("RectangleShape2D_shelf_wide")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="DeskTopLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(780, 560)
+shape = SubResource("RectangleShape2D_step")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="FireplaceMantel" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(970, 465)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="RightShelfMid" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(1120, 385)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="RightShelfUpper" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(1030, 305)
+shape = SubResource("RectangleShape2D_shelf_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="GeometryVisuals" type="Node2D" parent="."]
+
+[node name="FloorVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(640, 650)
+script = ExtResource("3_plat")
+size = Vector2(1400, 60)
+style = 0
+
+[node name="StepStoolVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(180, 580)
+script = ExtResource("3_plat")
+size = Vector2(80, 18)
+style = 0
+
+[node name="BookshelfLowVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(160, 465)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 0
+
+[node name="BookshelfHighVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(280, 385)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 0
+
+[node name="ClockShoulderVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(460, 395)
+script = ExtResource("3_plat")
+size = Vector2(140, 20)
+style = 0
+
+[node name="ClockTopVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(560, 315)
+script = ExtResource("3_plat")
+size = Vector2(140, 20)
+style = 0
+
+[node name="MidGearVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(740, 305)
+script = ExtResource("3_plat")
+size = Vector2(150, 20)
+style = 0
+
+[node name="AtticRafterMidVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(910, 285)
+script = ExtResource("3_plat")
+size = Vector2(150, 20)
+style = 0
+
+[node name="AtticRafterHighVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(1110, 235)
+script = ExtResource("3_plat")
+size = Vector2(240, 24)
+style = 0
+
+[node name="FireplaceVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(970, 465)
+script = ExtResource("3_plat")
+size = Vector2(150, 20)
+style = 0
+
+[node name="RightShelfMidVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(1120, 385)
+script = ExtResource("3_plat")
+size = Vector2(150, 20)
+style = 0
+
+[node name="RightShelfUpperVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(1030, 305)
+script = ExtResource("3_plat")
+size = Vector2(130, 20)
+style = 0
+
+[node name="Drawer1_EntranceDresser" parent="." instance=ExtResource("6_drawer")]
+position = Vector2(280, 620)
+drawer_name = "Comoda de la Intrare"
+search_dialog_text = "Doar arcuri vechi de ceas si praf..."
+furniture_type = "dresser"
+furniture_size = Vector2(68, 54)
+
+[node name="Drawer2_ClockBase" parent="." instance=ExtResource("6_drawer")]
+position = Vector2(500, 620)
+drawer_name = "Baza Orologiului"
+search_dialog_text = "Pendulul ticaie linistitor. Niciun colier aici."
+furniture_type = "clock_cabinet"
+furniture_size = Vector2(76, 78)
+
+[node name="Drawer3_Desk" parent="." instance=ExtResource("6_drawer")]
+position = Vector2(780, 620)
+drawer_name = "Biroul de Lucru"
+search_dialog_text = "Ai gasit Cheia Mica de Alama pe birou! Deschide Dulapul din Mansarda!"
+contains_key = true
+key_id = "brass_key"
+furniture_type = "desk"
+furniture_size = Vector2(84, 54)
+
+[node name="Drawer4_BookshelfNook" parent="." instance=ExtResource("6_drawer")]
+position = Vector2(280, 375)
+drawer_name = "Nisa din Biblioteca"
+search_dialog_text = "O cutie veche de catifea, dar este goala..."
+furniture_type = "dresser"
+furniture_size = Vector2(56, 44)
+
+[node name="Drawer5_AtticWardrobe" parent="." instance=ExtResource("6_drawer")]
+unique_name_in_owner = true
+position = Vector2(1110, 223)
+drawer_name = "Dulapul cel Mare din Mansarda"
+search_dialog_text = "Ai descuiat dulapul cu cheia de alama! Piesa 1 din Colier straluceste inauntru!"
+contains_necklace = true
+is_locked = true
+locked_dialog_text = "Dulapul este incuiat cu un zavor vechi! Cauta cheia mica de alama prin camera!"
+furniture_type = "wardrobe"
+furniture_size = Vector2(84, 96)
+
+[node name="MemoryPickup" parent="." instance=ExtResource("7_relic")]
+unique_name_in_owner = true
+position = Vector2(1110, 160)
+relic_type = 4
+relic_name = "Piesa 1 din Colier: Baza cu Lant"
+relic_color = Color(0.98, 0.82, 0.3, 1)
+
+[node name="GhostPlayer" parent="." instance=ExtResource("4_player")]
+unique_name_in_owner = true
+position = Vector2(100, 580)
+
+[node name="HUD" parent="." instance=ExtResource("8_hud")]
+unique_name_in_owner = true
+
+[node name="MemoryCompleteDialog" parent="." instance=ExtResource("9_dialog")]
+unique_name_in_owner = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("11_pause")]
+
+[node name="TutorialCanvas" type="CanvasLayer" parent="."]
+layer = 45
+
+[node name="TutorialBar" type="PanelContainer" parent="TutorialCanvas"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -52.0
+offset_right = 310.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tutorial")
+
+[node name="HBox" type="HBoxContainer" parent="TutorialCanvas/TutorialBar"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="HintMove" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.88, 0.94, 1)
+theme_override_font_sizes/font_size = 11
+text = "[A / D] Mișcare"
+
+[node name="Sep1" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.42, 0.52, 1)
+theme_override_font_sizes/font_size = 11
+text = "•"
+
+[node name="HintJump" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.88, 0.94, 1)
+theme_override_font_sizes/font_size = 11
+text = "[SPACE] Săritură"
+
+[node name="Sep2" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.42, 0.52, 1)
+theme_override_font_sizes/font_size = 11
+text = "•"
+
+[node name="HintGhost" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.88, 0.94, 1)
+theme_override_font_sizes/font_size = 11
+text = "[SHIFT] Mod Fantomă"
+
+[node name="Sep3" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.42, 0.52, 1)
+theme_override_font_sizes/font_size = 11
+text = "•"
+
+[node name="HintSearch" type="Label" parent="TutorialCanvas/TutorialBar/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Caută / Deschide"

@@ -1,0 +1,295 @@
+[gd_scene format=3 uid="uid://dm3k9x4r3v9ba"]
+
+[ext_resource type="Script" path="res://levels/memories/memory_3_miner.gd" id="1_script"]
+[ext_resource type="Script" path="res://common/visuals/ww2_warehouse_background.gd" id="2_bg"]
+[ext_resource type="Script" path="res://common/visuals/cartoon_platform.gd" id="3_plat"]
+[ext_resource type="PackedScene" path="res://entities/player/ghost_player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://entities/hazards/sweeping_searchlight.tscn" id="5_light"]
+[ext_resource type="PackedScene" path="res://entities/hazards/ww2_patrol_soldier.tscn" id="11_soldier"]
+[ext_resource type="PackedScene" path="res://entities/props/memory_pickup.tscn" id="6_relic"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://ui/memory_complete_dialog.tscn" id="8_dialog"]
+[ext_resource type="PackedScene" path="res://common/visuals/cartoon_post_process.tscn" id="9_post"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="10_pause"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1400, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crate_small"]
+size = Vector2(120, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam_small"]
+size = Vector2(140, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam_mid"]
+size = Vector2(150, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam_high"]
+size = Vector2(130, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vault"]
+size = Vector2(180, 24)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+bg_color = Color(0.12, 0.10, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.68, 0.28, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alert"]
+content_margin_left = 24.0
+content_margin_top = 18.0
+content_margin_right = 24.0
+content_margin_bottom = 18.0
+bg_color = Color(0.12, 0.06, 0.08, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 4
+border_color = Color(0.95, 0.25, 0.25, 1)
+
+[node name="Memory3Miner" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="WW2WarehouseBackground" type="Node2D" parent="."]
+script = ExtResource("2_bg")
+
+[node name="CartoonPostProcess" parent="." instance=ExtResource("9_post")]
+
+[node name="LevelGeometry" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 650)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="WallLeft" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(-20, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(1300, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Ceiling" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 10)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="OneWayPlatforms" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="StartCratesLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(200, 560)
+shape = SubResource("RectangleShape2D_crate_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="LowSteelBeam" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(380, 480)
+shape = SubResource("RectangleShape2D_beam_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="MidCrateTower" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(580, 410)
+shape = SubResource("RectangleShape2D_crate_small")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="SuspendedGirder" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(780, 340)
+shape = SubResource("RectangleShape2D_beam_mid")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="HighTrussLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(970, 270)
+shape = SubResource("RectangleShape2D_beam_high")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="AtticVaultLedge" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(1130, 190)
+shape = SubResource("RectangleShape2D_vault")
+one_way_collision = true
+one_way_collision_margin = 4.0
+
+[node name="GeometryVisuals" type="Node2D" parent="."]
+
+[node name="FloorPlat" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(640, 650)
+script = ExtResource("3_plat")
+size = Vector2(1400, 60)
+style = 4
+
+[node name="StartCratesVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(200, 560)
+script = ExtResource("3_plat")
+size = Vector2(120, 24)
+style = 1
+
+[node name="LowSteelBeamVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(380, 480)
+script = ExtResource("3_plat")
+size = Vector2(140, 20)
+style = 4
+
+[node name="MidCrateTowerVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(580, 410)
+script = ExtResource("3_plat")
+size = Vector2(120, 24)
+style = 1
+
+[node name="SuspendedGirderVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(780, 340)
+script = ExtResource("3_plat")
+size = Vector2(150, 20)
+style = 4
+
+[node name="HighTrussLedgeVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(970, 270)
+script = ExtResource("3_plat")
+size = Vector2(130, 20)
+style = 4
+
+[node name="AtticVaultVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(1130, 190)
+script = ExtResource("3_plat")
+size = Vector2(180, 24)
+style = 4
+
+[node name="SearchlightLeft" parent="." instance=ExtResource("5_light")]
+unique_name_in_owner = true
+position = Vector2(400, 50)
+sweep_angle = 35.0
+sweep_speed = 1.2
+beam_length = 460.0
+
+[node name="SearchlightMid" parent="." instance=ExtResource("5_light")]
+unique_name_in_owner = true
+position = Vector2(660, 40)
+sweep_angle = 40.0
+sweep_speed = 1.35
+beam_length = 450.0
+
+[node name="SearchlightRight" parent="." instance=ExtResource("5_light")]
+unique_name_in_owner = true
+position = Vector2(920, 50)
+sweep_angle = 35.0
+sweep_speed = 1.1
+beam_length = 430.0
+
+[node name="MemoryPickup" parent="." instance=ExtResource("6_relic")]
+unique_name_in_owner = true
+position = Vector2(1130, 130)
+relic_type = 6
+relic_name = "Piesa 3 din Colier: Medalionul cu Rubin"
+relic_color = Color(0.95, 0.28, 0.38, 1)
+
+[node name="GhostPlayer" parent="." instance=ExtResource("4_player")]
+unique_name_in_owner = true
+position = Vector2(100, 580)
+
+[node name="TimerUI" type="CanvasLayer" parent="."]
+layer = 45
+
+[node name="TimerContainer" type="PanelContainer" parent="TimerUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = 16.0
+offset_right = 75.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_timer")
+
+[node name="TimerLabel" type="Label" parent="TimerUI/TimerContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 0.78, 1)
+theme_override_font_sizes/font_size = 14
+text = "TIMP: 40s"
+horizontal_alignment = 1
+
+[node name="AlertContainer" type="Control" parent="TimerUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RedBackdrop" type="ColorRect" parent="TimerUI/AlertContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.65, 0.05, 0.08, 0.35)
+
+[node name="AlertPanel" type="PanelContainer" parent="TimerUI/AlertContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -50.0
+offset_right = 190.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_alert")
+
+[node name="AlertLabel" type="Label" parent="TimerUI/AlertContainer/AlertPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "ALARMA!
+Se reia de la inceput..."
+horizontal_alignment = 1
+
+[node name="SoldierPatrol1" parent="." instance=ExtResource("11_soldier")]
+position = Vector2(260, 620)
+patrol_left_x = 130.0
+patrol_right_x = 460.0
+move_speed = 60.0
+start_facing_right = true
+
+[node name="SoldierPatrol2" parent="." instance=ExtResource("11_soldier")]
+position = Vector2(640, 620)
+patrol_left_x = 490.0
+patrol_right_x = 830.0
+move_speed = 55.0
+start_facing_right = false
+
+[node name="SoldierPatrol3" parent="." instance=ExtResource("11_soldier")]
+position = Vector2(980, 620)
+patrol_left_x = 850.0
+patrol_right_x = 1180.0
+move_speed = 65.0
+start_facing_right = true
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
+unique_name_in_owner = true
+
+[node name="MemoryCompleteDialog" parent="." instance=ExtResource("8_dialog")]
+unique_name_in_owner = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("10_pause")]

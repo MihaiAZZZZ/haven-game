@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dfp4e67r81u2m"]
+
+[ext_resource type="Script" path="res://entities/props/interactive_switch.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw"]
+size = Vector2(48, 48)
+
+[node name="InteractiveSwitch" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_sw")
+
+[node name="PromptLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -64.0
+offset_right = 100.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.96, 0.92, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 13
+text = "[E] Activeaza"
+horizontal_alignment = 1
+vertical_alignment = 1

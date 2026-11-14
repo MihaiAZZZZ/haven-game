@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://cx8k2m7r4v1ba"]
+
+[ext_resource type="Script" path="res://levels/haven_ascension/haven_ascension.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://common/visuals/cartoon_post_process.tscn" id="2_post"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="3_pause"]
+
+[sub_resource type="Gradient" id="Gradient_sky"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.96, 0.82, 0.58, 1, 0.42, 0.35, 0.55, 1, 0.18, 0.14, 0.26, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
+gradient = SubResource("Gradient_sky")
+fill = 1
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+content_margin_left = 24.0
+content_margin_top = 18.0
+content_margin_right = 24.0
+content_margin_bottom = 18.0
+bg_color = Color(0.98, 0.96, 0.9, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_victory"]
+content_margin_left = 32.0
+content_margin_top = 28.0
+content_margin_right = 32.0
+content_margin_bottom = 28.0
+bg_color = Color(0.98, 0.96, 0.9, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_btn_normal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.95, 0.75, 0.25, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_btn_hover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 0.82, 0.35, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_btn_pressed"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.85, 0.65, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subtle_btn_normal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.88, 0.85, 0.78, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subtle_btn_hover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.95, 0.92, 0.86, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subtle_btn_pressed"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.78, 0.74, 0.66, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
+
+[sub_resource type="Curve" id="Curve_sparks"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="HavenAscension" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="SkyBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_sky")
+
+[node name="CartoonPostProcess" parent="." instance=ExtResource("2_post")]
+
+[node name="CelestialSparks" type="CPUParticles2D" parent="."]
+position = Vector2(640, 200)
+amount = 40
+lifetime = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(400, 200)
+gravity = Vector2(0, -25)
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_sparks")
+color = Color(1, 0.95, 0.75, 0.75)
+
+[node name="DialogueContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -370.0
+offset_top = -165.0
+offset_right = 370.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="VBox" type="VBoxContainer" parent="DialogueContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MessageLabel" type="Label" parent="DialogueContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.5, 0.1, 1)
+theme_override_font_sizes/font_size = 17
+text = "Vorbitor"
+
+[node name="QuoteLabel" type="Label" parent="DialogueContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(680, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.14, 0.1, 0.16, 1)
+theme_override_font_sizes/font_size = 14
+text = "Replica stramosului..."
+autowrap_mode = 2
+
+[node name="AscendPrompt" type="Label" parent="DialogueContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.4, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "[Space / Enter] Continua"
+horizontal_alignment = 2
+
+[node name="VictoryCard" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -160.0
+offset_right = 280.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(280, 160)
+theme_override_styles/panel = SubResource("StyleBoxFlat_victory")
+
+[node name="VBox" type="VBoxContainer" parent="VictoryCard"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="VictoryCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.5, 0.1, 1)
+theme_override_font_sizes/font_size = 22
+text = "AI AJUNS IN HAVEN"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="VictoryCard/VBox"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.14, 0.1, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ai descurcat firele suferintei si ai adus pacea generatiilor trecute.\n\nFiecare ramura a inflorit, iar sufletul tau a gasit linistea in cerurile din Haven."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxButtons" type="HBoxContainer" parent="VictoryCard/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="VictoryCard/VBox/HBoxButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_focus_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "Joaca Din Nou (Reset)"
+
+[node name="TreeHubButton" type="Button" parent="VictoryCard/VBox/HBoxButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_focus_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_subtle_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_subtle_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_subtle_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "Inapoi la Arbore"
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_pause")]

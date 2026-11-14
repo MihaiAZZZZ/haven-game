@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b1tq42m8x9p31"]
+
+[ext_resource type="Script" path="res://ui/hud.gd" id="1_script"]
+[ext_resource type="Script" path="res://ui/pause_icon_button.gd" id="2_btn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_none"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_script")
+
+[node name="PauseButton" type="Button" parent="."]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 58.0
+grow_horizontal = 0
+tooltip_text = "Pauza [ESC / P]"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_none")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_none")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_none")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_none")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_none")
+flat = true
+script = ExtResource("2_btn")
+bar_width = 7.0
+bar_height = 24.0
+bar_gap = 8.0

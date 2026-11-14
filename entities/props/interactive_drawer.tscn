@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://cx8m2rap5y4va"]
+
+[ext_resource type="Script" path="res://entities/props/interactive_drawer.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://dd46luh5kx2vr" path="res://assets/fonts/pixel_font.ttf" id="2_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(84, 76)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.09, 0.16, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.78, 0.28, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_message"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.98, 0.96, 0.9, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[node name="InteractiveDrawer" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="PromptContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 20
+position = Vector2(0, -75)
+
+[node name="Panel" type="PanelContainer" parent="PromptContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -38.0
+offset_top = -24.0
+offset_right = 38.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="PromptLabel" type="Label" parent="PromptContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.95, 0.78, 0.28, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Cauta"
+horizontal_alignment = 1
+
+[node name="MessageContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 30
+position = Vector2(0, -95)
+
+[node name="Panel" type="PanelContainer" parent="MessageContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -45.0
+offset_right = 110.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_message")
+
+[node name="MessageLabel" type="Label" parent="MessageContainer/Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(196, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 12
+text = "Doar arcuri vechi de ceas si praf..."
+horizontal_alignment = 1
+autowrap_mode = 2

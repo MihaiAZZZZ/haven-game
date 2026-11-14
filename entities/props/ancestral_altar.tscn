@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dm7k6x2r3v8cb"]
+
+[ext_resource type="Script" path="res://entities/props/ancestral_altar.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://dd46luh5kx2vr" path="res://assets/fonts/pixel_font.ttf" id="2_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_altar_range"]
+size = Vector2(260, 90)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.12, 0.09, 0.16, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.82, 0.35, 1)
+
+[node name="AncestralAltar" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_altar_range")
+
+[node name="PromptContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 35
+position = Vector2(0, -90)
+
+[node name="Panel" type="PanelContainer" parent="PromptContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -42.0
+offset_right = 140.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="VBox" type="VBoxContainer" parent="PromptContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="StatusLabel" type="Label" parent="PromptContainer/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.75, 0.72, 0.82, 1)
+theme_override_font_sizes/font_size = 10
+text = "Piese Asamblate: 0/3"
+horizontal_alignment = 1
+
+[node name="PromptLabel" type="Label" parent="PromptContainer/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.98, 0.85, 0.38, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Asaza Piesa 1: Baza cu Lant"
+horizontal_alignment = 1

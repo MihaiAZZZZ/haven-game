@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cb5k8x9p3y2vb"]
+
+[ext_resource type="Script" path="res://entities/hazards/sweeping_searchlight.gd" id="1_script"]
+
+[node name="SweepingSearchlight" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, -50, 350, 50, 350)

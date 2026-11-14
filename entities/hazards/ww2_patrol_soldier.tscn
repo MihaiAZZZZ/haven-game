@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c7nax4r2v8eb1"]
+
+[ext_resource type="Script" path="res://entities/hazards/ww2_patrol_soldier.gd" id="1_script"]
+
+[node name="WW2PatrolSoldier" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-12, -48, 12, -48, 110, -40, 120, 0, 12, 0, -12, 0)

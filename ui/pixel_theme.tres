@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b8q7m1n5x4p2e"]
+
+[ext_resource type="FontFile" uid="uid://dd46luh5kx2vr" path="res://assets/fonts/pixel_font.ttf" id="1_font"]
+
+[resource]
+default_font = ExtResource("1_font")
+default_font_size = 12
+Label/fonts/font = ExtResource("1_font")
+Button/fonts/font = ExtResource("1_font")
+RichTextLabel/fonts/font = ExtResource("1_font")

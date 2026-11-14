@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="72" viewBox="0 0 140 72" shape-rendering="crispEdges">
+<polygon points="40,36 130,22 136,68" fill="rgba(254, 240, 138, 0.25)"/>
+<line x1="40" y1="36" x2="133" y2="45" stroke="rgba(255, 255, 255, 0.45)" stroke-width="2"/>
+<rect x="20" y="52" width="8" height="18" fill="#1e1b24"/>
+<rect x="32" y="52" width="8" height="18" fill="#1e1b24"/>
+<rect x="18" y="24" width="26" height="30" fill="#1a141f"/>
+<rect x="19" y="25" width="24" height="28" fill="#3d4742"/>
+<rect x="19" y="44" width="24" height="8" fill="#29302c"/>
+<rect x="19" y="38" width="24" height="4" fill="#3d261a"/>
+<rect x="30" y="38" width="4" height="4" fill="#d97706"/>
+<rect x="25" y="16" width="14" height="8" fill="#fbcfe8"/>
+<rect x="34" y="18" width="3" height="3" fill="#1a141f"/>
+<rect x="20" y="8" width="24" height="10" fill="#1a141f"/>
+<rect x="22" y="9" width="20" height="8" fill="#475569"/>
+<rect x="24" y="8" width="16" height="3" fill="#64748b"/>
+<rect x="18" y="14" width="28" height="3" fill="#334155"/>
+<rect x="32" y="32" width="6" height="10" fill="#3d4742"/>
+<rect x="36" y="34" width="8" height="6" fill="#1e1b24"/>
+<rect x="42" y="33" width="4" height="8" fill="#fef08a"/>
+</svg>

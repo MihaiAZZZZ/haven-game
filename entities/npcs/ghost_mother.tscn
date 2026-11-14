@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://dm9k8x4r2v7cb"]
+
+[ext_resource type="Script" path="res://entities/npcs/ghost_mother.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://dd46luh5kx2vr" path="res://assets/fonts/pixel_font.ttf" id="2_font"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_range"]
+radius = 64.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prompt"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.12, 0.09, 0.16, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.72, 0.98, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue"]
+content_margin_left = 24.0
+content_margin_top = 16.0
+content_margin_right = 24.0
+content_margin_bottom = 16.0
+bg_color = Color(0.98, 0.96, 0.92, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.12, 0.09, 0.16, 1)
+
+[node name="GhostMother" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_range")
+
+[node name="PromptContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 25
+position = Vector2(0, -88)
+
+[node name="Panel" type="PanelContainer" parent="PromptContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -26.0
+offset_right = 75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_prompt")
+
+[node name="Label" type="Label" parent="PromptContainer/Panel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.9, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Vorbeste cu Mama"
+horizontal_alignment = 1
+
+[node name="DialogueBox" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = 110
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogueBox"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -290.0
+offset_top = -170.0
+offset_right = 290.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue")
+
+[node name="VBox" type="VBoxContainer" parent="DialogueBox/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpeakerNameLabel" type="Label" parent="DialogueBox/PanelContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.65, 0.35, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "Mama (Maria)"
+
+[node name="DialogueText" type="Label" parent="DialogueBox/PanelContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(530, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+text = "Corin, sufletul meu drag... Ai gasit colierul!"
+autowrap_mode = 2
+
+[node name="ContinuePrompt" type="Label" parent="DialogueBox/PanelContainer/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(0.55, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Continua"
+horizontal_alignment = 2

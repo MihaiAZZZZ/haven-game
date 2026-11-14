@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c5q2lq0x9n8vb"]
+
+[ext_resource type="Script" path="res://entities/props/spectral_barrier.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bar"]
+size = Vector2(24, 120)
+
+[node name="SpectralBarrier" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bar")

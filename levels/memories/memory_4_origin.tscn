@@ -1,0 +1,202 @@
+[gd_scene format=3 uid="uid://dm4k1yar5v2cb"]
+
+[ext_resource type="Script" path="res://levels/memories/memory_4_origin.gd" id="1_script"]
+[ext_resource type="Script" path="res://common/visuals/origin_sanctuary_background.gd" id="2_bg"]
+[ext_resource type="Script" path="res://common/visuals/cartoon_platform.gd" id="3_plat"]
+[ext_resource type="PackedScene" path="res://entities/player/ghost_player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://entities/npcs/ghost_origin.tscn" id="5_origin_npc"]
+[ext_resource type="PackedScene" path="res://entities/props/ancestral_altar.tscn" id="6_altar"]
+[ext_resource type="PackedScene" path="res://entities/props/memory_pickup.tscn" id="7_relic"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="8_hud"]
+[ext_resource type="PackedScene" path="res://ui/memory_complete_dialog.tscn" id="9_dialog"]
+[ext_resource type="PackedScene" path="res://common/visuals/cartoon_post_process.tscn" id="10_post"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="11_pause"]
+[ext_resource type="Script" path="res://levels/memories/cutscene_spirits.gd" id="12_spirits"]
+[ext_resource type="FontFile" uid="uid://dd46luh5kx2vr" path="res://assets/fonts/pixel_font.ttf" id="13_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1400, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelf"]
+size = Vector2(160, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cutscene"]
+content_margin_left = 28.0
+content_margin_top = 18.0
+content_margin_right = 28.0
+content_margin_bottom = 18.0
+bg_color = Color(0.10, 0.08, 0.14, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.96, 0.85, 0.40, 1)
+
+[node name="Memory4Origin" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="SanctuaryBackground" type="Node2D" parent="."]
+script = ExtResource("2_bg")
+
+[node name="CartoonPostProcess" parent="." instance=ExtResource("10_post")]
+
+[node name="LevelGeometry" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 650)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="WallLeft" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(-20, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(1300, 360)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Ceiling" type="CollisionShape2D" parent="LevelGeometry"]
+position = Vector2(640, 10)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="OneWayPlatforms" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="ArchLedgeLeft" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(240, 480)
+shape = SubResource("RectangleShape2D_shelf")
+one_way_collision = true
+
+[node name="ArchLedgeRight" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(1040, 480)
+shape = SubResource("RectangleShape2D_shelf")
+one_way_collision = true
+
+[node name="HighBalconyLeft" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(380, 350)
+shape = SubResource("RectangleShape2D_shelf")
+one_way_collision = true
+
+[node name="HighBalconyRight" type="CollisionShape2D" parent="OneWayPlatforms"]
+position = Vector2(900, 350)
+shape = SubResource("RectangleShape2D_shelf")
+one_way_collision = true
+
+[node name="GeometryVisuals" type="Node2D" parent="."]
+
+[node name="FloorVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(640, 650)
+script = ExtResource("3_plat")
+size = Vector2(1400, 60)
+style = 2
+
+[node name="ArchLeftVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(240, 480)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 2
+
+[node name="ArchRightVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(1040, 480)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 2
+
+[node name="BalconyLeftVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(380, 350)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 2
+
+[node name="BalconyRightVisual" type="Node2D" parent="GeometryVisuals"]
+position = Vector2(900, 350)
+script = ExtResource("3_plat")
+size = Vector2(160, 20)
+style = 2
+
+[node name="AncestralAltar" parent="." instance=ExtResource("6_altar")]
+unique_name_in_owner = true
+position = Vector2(640, 620)
+
+[node name="GhostOrigin" parent="." instance=ExtResource("5_origin_npc")]
+unique_name_in_owner = true
+position = Vector2(820, 580)
+
+[node name="MemoryPickup" parent="." instance=ExtResource("7_relic")]
+unique_name_in_owner = true
+position = Vector2(640, 520)
+relic_type = 4
+relic_name = "Colierul Stramosesc Reunit"
+relic_color = Color(0.98, 0.88, 0.35, 1)
+
+[node name="GhostPlayer" parent="." instance=ExtResource("4_player")]
+unique_name_in_owner = true
+position = Vector2(220, 580)
+
+[node name="CutsceneSpirits" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 40
+script = ExtResource("12_spirits")
+
+[node name="HUD" parent="." instance=ExtResource("8_hud")]
+unique_name_in_owner = true
+
+[node name="MemoryCompleteDialog" parent="." instance=ExtResource("9_dialog")]
+unique_name_in_owner = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("11_pause")]
+
+[node name="CutsceneLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = 120
+visible = false
+
+[node name="CutscenePanel" type="PanelContainer" parent="CutsceneLayer"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -180.0
+offset_right = 340.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cutscene")
+
+[node name="VBox" type="VBoxContainer" parent="CutsceneLayer/CutscenePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CutsceneSpeaker" type="Label" parent="CutsceneLayer/CutscenePanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_font")
+theme_override_colors/font_color = Color(0.98, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "Strabunica Victoria"
+
+[node name="CutsceneText" type="Label" parent="CutsceneLayer/CutscenePanel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_font")
+theme_override_colors/font_color = Color(0.96, 0.94, 0.98, 1)
+theme_override_font_sizes/font_size = 13
+text = "Blestemul iubirii este rupt..."
+autowrap_mode = 2
+
+[node name="CutscenePrompt" type="Label" parent="CutsceneLayer/CutscenePanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_font")
+theme_override_colors/font_color = Color(0.65, 0.62, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E / Space] Continua"
+horizontal_alignment = 2

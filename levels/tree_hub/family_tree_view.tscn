@@ -1,0 +1,331 @@
+[gd_scene format=3 uid="uid://df8k2m4r1v7ba"]
+
+[ext_resource type="Script" uid="uid://csnv87whk45qm" path="res://levels/tree_hub/family_tree_view.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://chicqy1j8ip26" path="res://levels/tree_hub/tree_canvas.gd" id="2_canvas"]
+
+[sub_resource type="Gradient" id="Gradient_bg"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0.13, 0.12, 0.17, 1, 0.08, 0.07, 0.11, 1, 0.05, 0.04, 0.07, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bg"]
+gradient = SubResource("Gradient_bg")
+fill = 1
+fill_from = Vector2(0.5, 0.35)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_popup_modal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.12, 0.11, 0.16, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.68, 0.28, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_enter"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.85, 0.68, 0.28, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_enter_pressed"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.72, 0.55, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_enter_hover"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.96, 0.78, 0.35, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_close"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.18, 0.16, 0.22, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.32, 0.42, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_close_hover"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.85, 0.25, 0.25, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_haven"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.85, 0.68, 0.25, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_haven_pressed"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.72, 0.55, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_haven_hover"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.95, 0.78, 0.32, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.1, 0.08, 0.12, 1)
+
+[node name="FamilyTreeView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="BackgroundTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_bg")
+
+[node name="HeaderContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="HeaderContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+text = "ARBORELE STRĂMOȘILOR"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HeaderContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.58, 0.68, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.1, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 11
+text = "Alege o amintire pentru a deschide taina trecutului."
+horizontal_alignment = 1
+
+[node name="TreeDrawLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_canvas")
+
+[node name="NodesContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="HavenAscendButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 220.0
+offset_right = 160.0
+offset_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 22)
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_focus_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_haven")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_haven_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_haven_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "URCĂ ÎN HAVEN (ASCENSIUNE)"
+
+[node name="LevelPopup" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupBackdrop" type="ColorRect" parent="LevelPopup"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06, 0.05, 0.09, 0.75)
+
+[node name="PopupModal" type="PanelContainer" parent="LevelPopup"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -130.0
+offset_right = 260.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(260, 130)
+theme_override_styles/panel = SubResource("StyleBoxFlat_popup_modal")
+
+[node name="VBox" type="VBoxContainer" parent="LevelPopup/PopupModal"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopHBox" type="HBoxContainer" parent="LevelPopup/PopupModal/VBox"]
+layout_mode = 2
+
+[node name="PopupTitle" type="Label" parent="LevelPopup/PopupModal/VBox/TopHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.96, 0.85, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.1, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 20
+text = "Camera cu Ceasuri"
+
+[node name="CloseButton" type="Button" parent="LevelPopup/PopupModal/VBox/TopHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.85, 0.82, 0.9, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_close")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_close_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_close")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "X"
+
+[node name="PopupSubtitle" type="Label" parent="LevelPopup/PopupModal/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.62, 0.72, 1)
+theme_override_font_sizes/font_size = 12
+text = "Corin • Amintirea 0 (Tu)"
+
+[node name="Divider" type="ColorRect" parent="LevelPopup/PopupModal/VBox"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.24, 0.22, 0.3, 1)
+
+[node name="PopupDesc" type="Label" parent="LevelPopup/PopupModal/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.88, 0.94, 1)
+theme_override_font_sizes/font_size = 12
+text = "Găsește cheia mică de alamă pe birou și descuie dulapul din mansardă pentru a găsi prima piesă din colier."
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="LevelPopup/PopupModal/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="EnterMemoryButton" type="Button" parent="LevelPopup/PopupModal/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_focus_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_enter")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_enter_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_enter_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "Intră în Amintire"

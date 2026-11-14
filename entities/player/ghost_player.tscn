@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://df2y7k8l4m3np"]
+
+[ext_resource type="Script" path="res://entities/player/ghost_player.gd" id="1_script"]
+[ext_resource type="Script" path="res://entities/player/ghost_sprite_drawer.gd" id="2_drawer"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p1"]
+radius = 14.0
+height = 36.0
+
+[sub_resource type="Curve" id="Curve_trail"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_trail"]
+colors = PackedColorArray(0.8, 0.95, 1, 0.7, 0.3, 0.7, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_light"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.4, 0.8, 1, 0.5, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_light"]
+gradient = SubResource("Gradient_light")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="GhostPlayer" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -18)
+shape = SubResource("CapsuleShape2D_p1")
+
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -6)
+amount = 16
+lifetime = 0.5
+speed_scale = 1.0
+explosiveness = 0.05
+lifetime_randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 8.0
+gravity = Vector2(0, -20)
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_trail")
+color_ramp = SubResource("Gradient_trail")
+
+[node name="VisualRoot" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="GhostDrawer" type="Node2D" parent="VisualRoot"]
+script = ExtResource("2_drawer")
+
+[node name="AuraLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+energy = 1.1
+texture = SubResource("GradientTexture2D_light")
+texture_scale = 1.8
