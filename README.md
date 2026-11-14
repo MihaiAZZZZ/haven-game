@@ -1,4 +1,4 @@
-# Haven: Arborele Sufletelor (Spectral Roots)
+# Bounce Back IN TIME!
 
 Un prototip de joc dezvoltat in **Godot 4.7+** inspirat din tema:
 > *"Esti o fantoma care trebuie sa isi descopere arborele genealogic pentru a putea da ascend in haven. Dupa fiecare level apare cate o ramura noua (un nou stramos de descoperit). La fiecare stramos vei retrai o amintire grea din viata (puzzle/platformer)."*
@@ -37,14 +37,3 @@ Pe masura ce explorezi **Arborele Genealogic al Sufletelor**, intri in amintiril
 | **Restart Rapid** | `R` | Reincepe nivelul curent |
 
 ---
-
-## Directia Vizuala & Arhitectura Tehnica
-
-- **Paleta Calda si Cozy**:
-  - Tonalitati calde de nuc, miere, pergament, teracota si lavanda blanda (fara albastru electric rece).
-  - Grafica curata, fara artefacte zgomotoase.
-  - UI aerisit, minimalist, fara emoji-uri.
-- **Meniu de Pauza Dedicat (`PauseMenu`)**:
-  - Disponibil oricand la `ESC` sau `P`, cu optiuni de continuare, restart si intoarcere la Arbore.
-- **Sintetizator Audio Procedural**:
-  - Generare dinamica de tonuri PCM (`AudioStreamWAV`), fara dependente de fisiere externe.
